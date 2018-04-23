@@ -69,6 +69,15 @@ find . \
 sed -i '' 's%::google::protobuf;%google::protobuf3;%' \
  tensorflow/core/platform/default/protobuf.h
 
+find . \
+ -type f \
+ \( -name "*.cc" -or -name "*.h" \) \
+ -exec sed -i '' \
+ 's%\([ :&(<]\)protobuf_%\1protobuf3_%g' {} \;
+
+sed -i '' 's%google/protobuf/compiler%google/protobuf3/compiler%g' tensorflow/contrib/makefile/downloads/protobuf/src/google/protobuf3/compiler/js/embed.cc
+
+
 # Fix up a couple of special build scripts that look for particular files.
 sed -i '' 's%src/google/protobuf/message.cc%src/google/protobuf3/message.cc%' \
  tensorflow/contrib/makefile/downloads/protobuf/configure.ac

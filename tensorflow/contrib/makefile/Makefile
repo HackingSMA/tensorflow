@@ -590,7 +590,17 @@ BENCHMARK_NAME := $(BINDIR)benchmark
 # What sources we want to compile, derived from the main Bazel build using the
 # gen_file_lists.sh script.
 
+# https://stackoverflow.com/questions/46984607/tensorflow-missing-c-api-from-static-library
+
+# $(wildcard tensorflow/c/eager/c_api.cc) \
+# $(wildcard tensorflow/c/eager/runtime.cc) \
+
+
 CORE_CC_ALL_SRCS := \
+$(wildcard tensorflow/c/c_api.cc) \
+$(wildcard tensorflow/c/c_api_function.cc) \
+$(wildcard tensorflow/c/checkpoint_reader.cc) \
+$(wildcard tensorflow/c/tf_status_helper.cc) \
 $(wildcard tensorflow/core/*.cc) \
 $(wildcard tensorflow/core/common_runtime/*.cc) \
 $(wildcard tensorflow/core/framework/*.cc) \

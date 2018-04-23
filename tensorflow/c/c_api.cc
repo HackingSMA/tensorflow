@@ -20,14 +20,6 @@ limitations under the License.
 #include <memory>
 #include <vector>
 
-#ifndef __ANDROID__
-#include "tensorflow/cc/framework/gradients.h"
-#include "tensorflow/cc/framework/ops.h"
-#include "tensorflow/cc/framework/scope_internal.h"
-#include "tensorflow/cc/ops/while_loop.h"
-#include "tensorflow/cc/saved_model/loader.h"
-#include "tensorflow/core/framework/op_gen_lib.h"
-#endif
 #include "tensorflow/c/c_api_internal.h"
 #include "tensorflow/core/common_runtime/device_mgr.h"
 #include "tensorflow/core/common_runtime/eval_const_tensor.h"
@@ -58,6 +50,19 @@ limitations under the License.
 #include "tensorflow/core/platform/types.h"
 #include "tensorflow/core/public/session.h"
 #include "tensorflow/core/public/version.h"
+
+// https://stackoverflow.com/questions/46984607/tensorflow-missing-c-api-from-static-library
+#define __ANDROID__ 1
+
+#ifndef __ANDROID__
+#include "tensorflow/cc/framework/gradients.h"
+#include "tensorflow/cc/framework/ops.h"
+#include "tensorflow/cc/framework/scope_internal.h"
+#include "tensorflow/cc/ops/while_loop.h"
+#include "tensorflow/cc/saved_model/loader.h"
+#include "tensorflow/core/framework/op_gen_lib.h"
+#endif
+
 
 // The implementation below is at the top level instead of the
 // brain namespace because we are defining 'extern "C"' functions.
