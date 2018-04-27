@@ -1,0 +1,22 @@
+From the root of the repo execute the following:
+
+# start clean
+git reset --hard HEAD
+git clean -fxd
+
+# get rid of /opt/local/lib library paths (prevents linking with wrong zlib)
+unset DYLD_FALLBACK_LIBRARY_PATH
+unset LIBRARY_PATH
+
+./tensorflow/contrib/makefile/download_dependencies.sh
+./tensorflow/contrib/makefile/rename_protobuf.sh
+./tensorflow/contrib/makefile/compile_ios_protobuf.sh
+export HOST_NSYNC_LIB=`tensorflow/contrib/makefile/compile_nsync.sh`
+export TARGET_NSYNC_LIB=`tensorflow/contrib/makefile/compile_nsync.sh -t ios`
+
+tensorflow/contrib/makefile/compile_ios_tensorflow.sh -f "-O3" -h $HOST_NSYNC_LIB -n $TARGET_NSYNC_LIB
+*** THIS WILL FAIL (that's expected) ***
+
+
+find tensorflow/contrib/makefile/gen/ -type f \( -name "*.cc" -or -name "*.h" \) -exec sed -i '' 's%\([ :&(<]\)protobuf_%\1protobuf3_%g' {} \;
+tensorflow/contrib/makefile/compile_ios_tensorflow.sh -f "-O3" -h $HOST_NSYNC_LIB -n $TARGET_NSYNC_LIB
