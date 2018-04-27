@@ -600,6 +600,7 @@ CORE_CC_ALL_SRCS := \
 $(wildcard tensorflow/c/c_api.cc) \
 $(wildcard tensorflow/c/c_api_function.cc) \
 $(wildcard tensorflow/c/checkpoint_reader.cc) \
+$(wildcard tensorflow/c/python_api.cc) \
 $(wildcard tensorflow/c/tf_status_helper.cc) \
 $(wildcard tensorflow/core/*.cc) \
 $(wildcard tensorflow/core/common_runtime/*.cc) \
