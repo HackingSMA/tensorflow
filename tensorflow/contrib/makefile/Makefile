@@ -48,7 +48,7 @@ endif # HEXAGON_LIBS
 
 # If ANDROID_TYPES is not set assume __ANDROID_TYPES_SLIM__
 ifeq ($(ANDROID_TYPES),)
-	ANDROID_TYPES := -D__ANDROID_TYPES_SLIM__
+	ANDROID_TYPES := -D__ANDROID_TYPES_FULL__
 endif
 
 # Try to figure out the host system
