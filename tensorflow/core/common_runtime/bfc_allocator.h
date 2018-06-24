@@ -374,13 +374,17 @@ class BFCAllocator : public VisitableAllocator {
     return r - 1;
   }
 
-  // Returns floor(log2(n)).
+    // Returns floor(log2(n)).
   inline int Log2FloorNonZero(uint64 n) {
 #if defined(__GNUC__)
     return 63 ^ __builtin_clzll(n);
 #elif defined(PLATFORM_WINDOWS)
     unsigned long index;
-    _BitScanReverse64(&index, n);
+#if __MACHINEX64
+  _BitScanReverse64(&index, n);
+#else
+  _BitScanReverse(&index, n);
+#endif
     return index;
 #else
     return Log2FloorNonZeroSlow(n);
