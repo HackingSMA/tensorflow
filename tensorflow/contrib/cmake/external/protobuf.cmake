@@ -52,11 +52,15 @@ else()
   set(PROTOBUF_PROTOC_EXECUTABLE ${CMAKE_CURRENT_BINARY_DIR}/protobuf/src/protobuf/protoc)
 endif()
 
+# use local patched archive
+set(PROTOBUF_URL ${CMAKE_CURRENT_BINARY_DIR}/../../../../protobuf-patched.tar.gz)
+
 ExternalProject_Add(protobuf
     PREFIX protobuf
     DEPENDS zlib
-    GIT_REPOSITORY ${PROTOBUF_URL}
-    GIT_TAG ${PROTOBUF_TAG}
+    URL ${PROTOBUF_URL}
+    #GIT_REPOSITORY ${PROTOBUF_URL}
+    #GIT_TAG ${PROTOBUF_TAG}
     DOWNLOAD_DIR "${DOWNLOAD_LOCATION}"
     BUILD_IN_SOURCE 1
     BUILD_BYPRODUCTS ${PROTOBUF_PROTOC_EXECUTABLE} ${protobuf_STATIC_LIBRARIES}
