@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 2.8.3)
 
 project(sqlite)
 
+add_definitions(-DSQLITE_OS_WINRT)
+
 set(SQLITE_SRCS
     "sqlite3.c"
 )
