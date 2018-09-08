@@ -227,157 +227,163 @@ class WinReadOnlyMemoryRegion : public ReadOnlyMemoryRegion {
 
 Status WindowsFileSystem::NewRandomAccessFile(
     const string& fname, std::unique_ptr<RandomAccessFile>* result) {
-  string translated_fname = TranslateName(fname);
-  std::wstring ws_translated_fname = Utf8ToWideChar(translated_fname);
-  result->reset();
+  //string translated_fname = TranslateName(fname);
+  //std::wstring ws_translated_fname = Utf8ToWideChar(translated_fname);
+  //result->reset();
 
-  // Open the file for read-only random access
-  // Open in async mode which makes Windows allow more parallelism even
-  // if we need to do sync I/O on top of it.
-  DWORD file_flags = FILE_ATTRIBUTE_READONLY | FILE_FLAG_OVERLAPPED;
-  // Shared access is necessary for tests to pass
-  // almost all tests would work with a possible exception of fault_injection.
-  DWORD share_mode = FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE;
+  //// Open the file for read-only random access
+  //// Open in async mode which makes Windows allow more parallelism even
+  //// if we need to do sync I/O on top of it.
+  //DWORD file_flags = FILE_ATTRIBUTE_READONLY | FILE_FLAG_OVERLAPPED;
+  //// Shared access is necessary for tests to pass
+  //// almost all tests would work with a possible exception of fault_injection.
+  //DWORD share_mode = FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE;
 
-  HANDLE hfile =
-      ::CreateFileW(ws_translated_fname.c_str(), GENERIC_READ, share_mode, NULL,
-                    OPEN_EXISTING, file_flags, NULL);
+  //HANDLE hfile =
+  //    ::CreateFileW(ws_translated_fname.c_str(), GENERIC_READ, share_mode, NULL,
+  //                  OPEN_EXISTING, file_flags, NULL);
 
-  if (INVALID_HANDLE_VALUE == hfile) {
-    string context = "NewRandomAccessFile failed to Create/Open: " + fname;
-    return IOErrorFromWindowsError(context, ::GetLastError());
-  }
+  //if (INVALID_HANDLE_VALUE == hfile) {
+  //  string context = "NewRandomAccessFile failed to Create/Open: " + fname;
+  //  return IOErrorFromWindowsError(context, ::GetLastError());
+  //}
 
-  result->reset(new WindowsRandomAccessFile(translated_fname, hfile));
-  return Status::OK();
+  //result->reset(new WindowsRandomAccessFile(translated_fname, hfile));
+  //return Status::OK();
+  return Status::Status(tensorflow::error::UNIMPLEMENTED, string(""));
 }
 
 Status WindowsFileSystem::NewWritableFile(
     const string& fname, std::unique_ptr<WritableFile>* result) {
-  string translated_fname = TranslateName(fname);
-  std::wstring ws_translated_fname = Utf8ToWideChar(translated_fname);
-  result->reset();
+  //string translated_fname = TranslateName(fname);
+  //std::wstring ws_translated_fname = Utf8ToWideChar(translated_fname);
+  //result->reset();
 
-  DWORD share_mode = FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE;
-  HANDLE hfile =
-      ::CreateFileW(ws_translated_fname.c_str(), GENERIC_WRITE, share_mode,
-                    NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+  //DWORD share_mode = FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE;
+  //HANDLE hfile =
+  //    ::CreateFileW(ws_translated_fname.c_str(), GENERIC_WRITE, share_mode,
+  //                  NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
-  if (INVALID_HANDLE_VALUE == hfile) {
-    string context = "Failed to create a NewWriteableFile: " + fname;
-    return IOErrorFromWindowsError(context, ::GetLastError());
-  }
+  //if (INVALID_HANDLE_VALUE == hfile) {
+  //  string context = "Failed to create a NewWriteableFile: " + fname;
+  //  return IOErrorFromWindowsError(context, ::GetLastError());
+  //}
 
-  result->reset(new WindowsWritableFile(translated_fname, hfile));
-  return Status::OK();
+  //result->reset(new WindowsWritableFile(translated_fname, hfile));
+  //return Status::OK();
+  return Status::Status(tensorflow::error::UNIMPLEMENTED, string(""));
 }
 
 Status WindowsFileSystem::NewAppendableFile(
     const string& fname, std::unique_ptr<WritableFile>* result) {
-  string translated_fname = TranslateName(fname);
-  std::wstring ws_translated_fname = Utf8ToWideChar(translated_fname);
-  result->reset();
+  //string translated_fname = TranslateName(fname);
+  //std::wstring ws_translated_fname = Utf8ToWideChar(translated_fname);
+  //result->reset();
 
-  DWORD share_mode = FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE;
-  HANDLE hfile =
-      ::CreateFileW(ws_translated_fname.c_str(), GENERIC_WRITE, share_mode,
-                    NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+  //DWORD share_mode = FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE;
+  //HANDLE hfile =
+  //    ::CreateFileW(ws_translated_fname.c_str(), GENERIC_WRITE, share_mode,
+  //                  NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
-  if (INVALID_HANDLE_VALUE == hfile) {
-    string context = "Failed to create a NewAppendableFile: " + fname;
-    return IOErrorFromWindowsError(context, ::GetLastError());
-  }
+  //if (INVALID_HANDLE_VALUE == hfile) {
+  //  string context = "Failed to create a NewAppendableFile: " + fname;
+  //  return IOErrorFromWindowsError(context, ::GetLastError());
+  //}
 
-  UniqueCloseHandlePtr file_guard(hfile, CloseHandleFunc);
+  //UniqueCloseHandlePtr file_guard(hfile, CloseHandleFunc);
 
-  DWORD file_ptr = ::SetFilePointer(hfile, NULL, NULL, FILE_END);
-  if (INVALID_SET_FILE_POINTER == file_ptr) {
-    string context = "Failed to create a NewAppendableFile: " + fname;
-    return IOErrorFromWindowsError(context, ::GetLastError());
-  }
+  //DWORD file_ptr = ::SetFilePointer(hfile, NULL, NULL, FILE_END);
+  //if (INVALID_SET_FILE_POINTER == file_ptr) {
+  //  string context = "Failed to create a NewAppendableFile: " + fname;
+  //  return IOErrorFromWindowsError(context, ::GetLastError());
+  //}
 
-  result->reset(new WindowsWritableFile(translated_fname, hfile));
-  file_guard.release();
+  //result->reset(new WindowsWritableFile(translated_fname, hfile));
+  //file_guard.release();
 
-  return Status::OK();
+  //return Status::OK();
+
+  return Status::Status(tensorflow::error::UNIMPLEMENTED, string(""));
 }
 
 Status WindowsFileSystem::NewReadOnlyMemoryRegionFromFile(
     const string& fname, std::unique_ptr<ReadOnlyMemoryRegion>* result) {
-  string translated_fname = TranslateName(fname);
-  std::wstring ws_translated_fname = Utf8ToWideChar(translated_fname);
-  result->reset();
-  Status s = Status::OK();
+  //string translated_fname = TranslateName(fname);
+  //std::wstring ws_translated_fname = Utf8ToWideChar(translated_fname);
+  //result->reset();
+  //Status s = Status::OK();
 
-  // Open the file for read-only
-  DWORD file_flags = FILE_ATTRIBUTE_READONLY;
+  //// Open the file for read-only
+  //DWORD file_flags = FILE_ATTRIBUTE_READONLY;
 
-  // Open in async mode which makes Windows allow more parallelism even
-  // if we need to do sync I/O on top of it.
-  file_flags |= FILE_FLAG_OVERLAPPED;
+  //// Open in async mode which makes Windows allow more parallelism even
+  //// if we need to do sync I/O on top of it.
+  //file_flags |= FILE_FLAG_OVERLAPPED;
 
-  DWORD share_mode = FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE;
-  HANDLE hfile =
-      ::CreateFileW(ws_translated_fname.c_str(), GENERIC_READ, share_mode, NULL,
-                    OPEN_EXISTING, file_flags, NULL);
+  //DWORD share_mode = FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE;
+  //HANDLE hfile =
+  //    ::CreateFileW(ws_translated_fname.c_str(), GENERIC_READ, share_mode, NULL,
+  //                  OPEN_EXISTING, file_flags, NULL);
 
-  if (INVALID_HANDLE_VALUE == hfile) {
-    return IOErrorFromWindowsError(
-        "NewReadOnlyMemoryRegionFromFile failed to Create/Open: " + fname,
-        ::GetLastError());
-  }
+  //if (INVALID_HANDLE_VALUE == hfile) {
+  //  return IOErrorFromWindowsError(
+  //      "NewReadOnlyMemoryRegionFromFile failed to Create/Open: " + fname,
+  //      ::GetLastError());
+  //}
 
-  UniqueCloseHandlePtr file_guard(hfile, CloseHandleFunc);
+  //UniqueCloseHandlePtr file_guard(hfile, CloseHandleFunc);
 
-  // Use mmap when virtual address-space is plentiful.
-  uint64_t file_size;
-  s = GetFileSize(translated_fname, &file_size);
-  if (s.ok()) {
-    // Will not map empty files
-    if (file_size == 0) {
-      return IOError(
-          "NewReadOnlyMemoryRegionFromFile failed to map empty file: " + fname,
-          EINVAL);
-    }
+  //// Use mmap when virtual address-space is plentiful.
+  //uint64_t file_size;
+  //s = GetFileSize(translated_fname, &file_size);
+  //if (s.ok()) {
+  //  // Will not map empty files
+  //  if (file_size == 0) {
+  //    return IOError(
+  //        "NewReadOnlyMemoryRegionFromFile failed to map empty file: " + fname,
+  //        EINVAL);
+  //  }
 
-    HANDLE hmap = ::CreateFileMappingA(hfile, NULL, PAGE_READONLY,
-                                       0,  // Whole file at its present length
-                                       0,
-                                       NULL);  // Mapping name
+  //  HANDLE hmap = ::CreateFileMappingA(hfile, NULL, PAGE_READONLY,
+  //                                     0,  // Whole file at its present length
+  //                                     0,
+  //                                     NULL);  // Mapping name
 
-    if (!hmap) {
-      string context =
-          "Failed to create file mapping for "
-          "NewReadOnlyMemoryRegionFromFile: " +
-          fname;
-      return IOErrorFromWindowsError(context, ::GetLastError());
-    }
+  //  if (!hmap) {
+  //    string context =
+  //        "Failed to create file mapping for "
+  //        "NewReadOnlyMemoryRegionFromFile: " +
+  //        fname;
+  //    return IOErrorFromWindowsError(context, ::GetLastError());
+  //  }
 
-    UniqueCloseHandlePtr map_guard(hmap, CloseHandleFunc);
+  //  UniqueCloseHandlePtr map_guard(hmap, CloseHandleFunc);
 
-    const void* mapped_region =
-        ::MapViewOfFileEx(hmap, FILE_MAP_READ,
-                          0,  // High DWORD of access start
-                          0,  // Low DWORD
-                          file_size,
-                          NULL);  // Let the OS choose the mapping
+  //  const void* mapped_region =
+  //      ::MapViewOfFileEx(hmap, FILE_MAP_READ,
+  //                        0,  // High DWORD of access start
+  //                        0,  // Low DWORD
+  //                        file_size,
+  //                        NULL);  // Let the OS choose the mapping
 
-    if (!mapped_region) {
-      string context =
-          "Failed to MapViewOfFile for "
-          "NewReadOnlyMemoryRegionFromFile: " +
-          fname;
-      return IOErrorFromWindowsError(context, ::GetLastError());
-    }
+  //  if (!mapped_region) {
+  //    string context =
+  //        "Failed to MapViewOfFile for "
+  //        "NewReadOnlyMemoryRegionFromFile: " +
+  //        fname;
+  //    return IOErrorFromWindowsError(context, ::GetLastError());
+  //  }
 
-    result->reset(new WinReadOnlyMemoryRegion(fname, hfile, hmap, mapped_region,
-                                              file_size));
+  //  result->reset(new WinReadOnlyMemoryRegion(fname, hfile, hmap, mapped_region,
+  //                                            file_size));
 
-    map_guard.release();
-    file_guard.release();
-  }
+  //  map_guard.release();
+  //  file_guard.release();
+  //}
 
-  return s;
+  //return s;
+
+  return Status::Status(tensorflow::error::UNIMPLEMENTED, string(""));
 }
 
 Status WindowsFileSystem::FileExists(const string& fname) {
@@ -501,17 +507,18 @@ Status WindowsFileSystem::GetMatchingPaths(const string& pattern,
 }
 
 Status WindowsFileSystem::Stat(const string& fname, FileStatistics* stat) {
-  Status result;
-  struct _stat sbuf;
-  std::wstring ws_translated_fname = Utf8ToWideChar(TranslateName(fname));
-  if (_wstat(ws_translated_fname.c_str(), &sbuf) != 0) {
-    result = IOError(fname, errno);
-  } else {
-    stat->mtime_nsec = sbuf.st_mtime * 1e9;
-    stat->length = sbuf.st_size;
-    stat->is_directory = PathIsDirectoryW(ws_translated_fname.c_str());
-  }
-  return result;
+  //Status result;
+  //struct _stat sbuf;
+  //std::wstring ws_translated_fname = Utf8ToWideChar(TranslateName(fname));
+  //if (_wstat(ws_translated_fname.c_str(), &sbuf) != 0) {
+  //  result = IOError(fname, errno);
+  //} else {
+  //  stat->mtime_nsec = sbuf.st_mtime * 1e9;
+  //  stat->length = sbuf.st_size;
+  //  stat->is_directory = PathIsDirectoryW(ws_translated_fname.c_str());
+  //}
+  //return result;
+  return Status::Status(tensorflow::error::UNIMPLEMENTED, string(""));
 }
 
 }  // namespace tensorflow

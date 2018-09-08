@@ -58,12 +58,12 @@ class WindowsEnv : public Env {
     // versions of Windows. For that reason, we try to look it up in
     // kernel32.dll at runtime and use an alternative option if the function
     // is not available.
-    HMODULE module = GetModuleHandleW(L"kernel32.dll");
-    if (module != NULL) {
-      auto func = (FnGetSystemTimePreciseAsFileTime)GetProcAddress(
-          module, "GetSystemTimePreciseAsFileTime");
-      GetSystemTimePreciseAsFileTime_ = func;
-    }
+    //HMODULE module = GetModuleHandleW(L"kernel32.dll");
+    //if (module != NULL) {
+    //  auto func = (FnGetSystemTimePreciseAsFileTime)GetProcAddress(
+    //      module, "GetSystemTimePreciseAsFileTime");
+    //  GetSystemTimePreciseAsFileTime_ = func;
+    //}
   }
 
   ~WindowsEnv() override {
@@ -71,9 +71,10 @@ class WindowsEnv : public Env {
   }
 
   bool MatchPath(const string& path, const string& pattern) override {
-    std::wstring ws_path(WindowsFileSystem::Utf8ToWideChar(path));
-    std::wstring ws_pattern(WindowsFileSystem::Utf8ToWideChar(pattern));
-    return PathMatchSpecW(ws_path.c_str(), ws_pattern.c_str()) == TRUE;
+    //std::wstring ws_path(WindowsFileSystem::Utf8ToWideChar(path));
+    //std::wstring ws_pattern(WindowsFileSystem::Utf8ToWideChar(pattern));
+    //return PathMatchSpecW(ws_path.c_str(), ws_pattern.c_str()) == TRUE;
+    return false;
   }
 
   void SleepForMicroseconds(int64 micros) override { Sleep(micros / 1000); }
@@ -122,18 +123,19 @@ class WindowsEnv : public Env {
   }
 
   Status LoadLibrary(const char* library_filename, void** handle) override {
-    std::string file_name = library_filename;
-    std::replace(file_name.begin(), file_name.end(), '/', '\\');
+    //std::string file_name = library_filename;
+    //std::replace(file_name.begin(), file_name.end(), '/', '\\');
 
-    std::wstring ws_file_name(WindowsFileSystem::Utf8ToWideChar(file_name));
+    //std::wstring ws_file_name(WindowsFileSystem::Utf8ToWideChar(file_name));
 
-    HMODULE hModule = LoadLibraryExW(ws_file_name.c_str(), NULL,
-                                     LOAD_WITH_ALTERED_SEARCH_PATH);
-    if (!hModule) {
-      return errors::NotFound(file_name + " not found");
-    }
-    *handle = hModule;
-    return Status::OK();
+    //HMODULE hModule = LoadLibraryExW(ws_file_name.c_str(), NULL,
+    //                                 LOAD_WITH_ALTERED_SEARCH_PATH);
+    //if (!hModule) {
+    //  return errors::NotFound(file_name + " not found");
+    //}
+    //*handle = hModule;
+    //return Status::OK();
+    return Status::Status(tensorflow::error::UNIMPLEMENTED, string(""));
   }
 
   Status GetSymbolFromLibrary(void* handle, const char* symbol_name,

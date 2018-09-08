@@ -150,6 +150,7 @@ bool Snappy_Uncompress(const char* input, size_t length, char* output) {
 string Demangle(const char* mangled) { return mangled; }
 
 double NominalCPUFrequency() {
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
   DWORD data;
   DWORD data_size = sizeof(data);
   #pragma comment(lib, "shlwapi.lib")  // For SHGetValue().
@@ -159,6 +160,7 @@ double NominalCPUFrequency() {
                       "~MHz", nullptr, &data, &data_size))) {
     return data * 1e6;  // Value is MHz.
   }
+#endif
   return 1.0;
 }
 

@@ -309,11 +309,11 @@ string Env::GetExecutablePath() {
     return "";
   }
 #elif defined(PLATFORM_WINDOWS)
-  HMODULE hModule = GetModuleHandleW(NULL);
-  WCHAR wc_file_path[MAX_PATH] = {0};
-  GetModuleFileNameW(hModule, wc_file_path, MAX_PATH);
-  string file_path = WindowsFileSystem::WideCharToUtf8(wc_file_path);
-  std::copy(file_path.begin(), file_path.end(), exe_path);
+  //HMODULE hModule = GetModuleHandleW(NULL);
+  //WCHAR wc_file_path[MAX_PATH] = {0};
+  //GetModuleFileNameW(hModule, wc_file_path, MAX_PATH);
+  //string file_path = WindowsFileSystem::WideCharToUtf8(wc_file_path);
+  //std::copy(file_path.begin(), file_path.end(), exe_path);
 #else
   CHECK_NE(-1, readlink("/proc/self/exe", exe_path, sizeof(exe_path) - 1));
 #endif

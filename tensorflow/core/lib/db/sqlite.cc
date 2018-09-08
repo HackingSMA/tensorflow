@@ -97,7 +97,7 @@ Status SetPragma(Sqlite* db, const char* pragma, const StringPiece& value) {
 }
 
 const StringPiece GetEnv(const char* var) {
-  const char* val = std::getenv(var);
+  const char* val = getenv(var);
   return (val == nullptr) ? StringPiece() : StringPiece(val);
 }
 
