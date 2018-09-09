@@ -31,6 +31,9 @@ foreach(line ${workspace_contents})
     endif()
 endforeach()
 
+# use local patched archive
+set(eigen_url ${CMAKE_CURRENT_BINARY_DIR}/../../../../eigen-patched.tar.gz)
+
 set(eigen_INCLUDE_DIRS
     ${CMAKE_CURRENT_BINARY_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}/external/eigen_archive
