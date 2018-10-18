@@ -14,9 +14,9 @@ unset LIBRARY_PATH
 export HOST_NSYNC_LIB=`tensorflow/contrib/makefile/compile_nsync.sh`
 export TARGET_NSYNC_LIB=`tensorflow/contrib/makefile/compile_nsync.sh -t ios`
 
-tensorflow/contrib/makefile/compile_ios_tensorflow.sh -f "-O3" -h $HOST_NSYNC_LIB -n $TARGET_NSYNC_LIB
+tensorflow/contrib/makefile/compile_ios_tensorflow.sh -f "-Os" -h $HOST_NSYNC_LIB -n $TARGET_NSYNC_LIB -a [x86_64, armv7, arm64]
 *** THIS WILL FAIL (that's expected) ***
 
 
 find tensorflow/contrib/makefile/gen/ -type f \( -name "*.cc" -or -name "*.h" \) -exec sed -i '' 's%\([ :&(<]\)protobuf_%\1protobuf3_%g' {} \;
-tensorflow/contrib/makefile/compile_ios_tensorflow.sh -f "-O3" -h $HOST_NSYNC_LIB -n $TARGET_NSYNC_LIB
+tensorflow/contrib/makefile/compile_ios_tensorflow.sh -f "-O3 -DSELECTIVE_REGISTRATION" -h $HOST_NSYNC_LIB -n $TARGET_NSYNC_LIB  -a [x86_64, armv7, arm64]
