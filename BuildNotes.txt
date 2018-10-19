@@ -32,5 +32,5 @@ tensorflow/contrib/makefile/compile_ios_tensorflow.sh -f "-Os" -h $HOST_NSYNC_LI
 mkdir ios
 cp ./tensorflow/contrib/makefile/gen/lib/libtensorflow-core.a ios
 cp ./tensorflow/contrib/makefile/gen/protobuf_ios/lib/libprotobuf.a ios/libprotobuf3.a
-cp ./tensorflow/contrib/makefile/gen/protobuf_ios/lib/libprotobuf-lite.a libprotobuf3-lite.a
+cp ./tensorflow/contrib/makefile/gen/protobuf_ios/lib/libprotobuf-lite.a ios/libprotobuf3-lite.a
 lipo -create -output ./ios/libnsync.a ./tensorflow/contrib/makefile/downloads/nsync/builds/x86_64.ios.c++11/libnsync.a ./tensorflow/contrib/makefile/downloads/nsync/builds/armv7.ios.c++11/libnsync.a ./tensorflow/contrib/makefile/downloads/nsync/builds/arm64.ios.c++11/libnsync.a 
