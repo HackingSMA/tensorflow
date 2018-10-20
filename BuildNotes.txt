@@ -19,13 +19,11 @@ export TARGET_NSYNC_LIB=`tensorflow/contrib/makefile/compile_nsync.sh -t ios  -a
 
 
 ### NOTE: THIS WILL FAIL (that's expected)
-tensorflow/contrib/makefile/compile_ios_tensorflow.sh -f "-Os" -h $HOST_NSYNC_LIB -n $TARGET_NSYNC_LIB -a "$BUILD_TARGET"
-
-
+#tensorflow/contrib/makefile/compile_ios_tensorflow.sh -f "-Os" -h $HOST_NSYNC_LIB -n $TARGET_NSYNC_LIB -a "$BUILD_TARGET"
 # fix it
-find tensorflow/contrib/makefile/gen/ -type f \( -name "*.cc" -or -name "*.h" \) -exec sed -i '' 's%\([ :&(<]\)protobuf_%\1protobuf3_%g' {} \;
-
+#find tensorflow/contrib/makefile/gen/ -type f \( -name "*.cc" -or -name "*.h" \) -exec sed -i '' 's%\([ :&(<]\)protobuf_%\1protobuf3_%g' {} \;
 # try again
+
 tensorflow/contrib/makefile/compile_ios_tensorflow.sh -f "-Os" -h $HOST_NSYNC_LIB -n $TARGET_NSYNC_LIB -a "$BUILD_TARGET"
 
 # package desired architectures, rename and copy into a single directory
