@@ -30,5 +30,7 @@ GEN_H=${GEN_DIR}/${H_FILE}
 
 sed -i '' 's%protobuf::%protobuf3::%g' ${GEN_CC}
 sed -i '' 's%protobuf::%protobuf3::%g' ${GEN_H}
+sed -i '' 's%\([ :&(<]\)protobuf_%\1protobuf3_%g' ${GEN_CC}
+sed -i '' 's%\([ :&(<]\)protobuf_%\1protobuf3_%g' ${GEN_H}
 sed -i '' 's%google_2fprotobuf3_2f%google_2fprotobuf_2f%g' ${GEN_CC}
 sed -i '' 's%google_2fprotobuf3_2f%google_2fprotobuf_2f%g' ${GEN_H}
